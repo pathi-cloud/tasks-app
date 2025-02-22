@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check event
-        run: echo "PR triggered the workflow!"
+        run: echo "PR triggered the!"
 
   ci:
     uses: pathi-cloud/github-workflows/.github/workflows/ci-ui-application.yml@main
