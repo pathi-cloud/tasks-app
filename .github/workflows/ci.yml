@@ -27,5 +27,5 @@ jobs:
     uses: pathi-cloud/github-workflows/.github/workflows/ci-ui-application.yml@main
     with:
       run_acceptance: false
-      gh_pages_deploy_dir: ./dist
+      gh_pages_deploy_dir: ./build-ghpages
   
