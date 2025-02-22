@@ -23,5 +23,12 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  debug:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check event
+        run: echo "PR triggered the workflow!"
+
   ci:
     uses: pathi-cloud/github-workflows/.github/workflows/ci-ui-application.yml@main
+  
