@@ -29,3 +29,9 @@ jobs:
       run_acceptance: false
       gh_pages_deploy_dir: ./build-ghpages
   
+  docker:
+    needs:
+      - ci
+    uses: ./.github/workflows/ci-container.yml@docker
+    with:
+      tag_version: 1.0

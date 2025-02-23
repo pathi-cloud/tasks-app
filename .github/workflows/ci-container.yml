@@ -1,0 +1,59 @@
+name: CI Container
+
+on:
+  workflow_call:
+    inputs:
+      dockerfile:
+        description: Name of Dockerfile to build
+        required: false
+        type: string
+        default: "./Dockerfile"
+    
+      docker_build_dir:
+        description: Name of Docker build dir
+        required: false
+        type: string
+        default: "./"     
+
+      tag_version:
+        description: |
+          This is a tag version generated from tag-manage action
+        required: true
+        type: string
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+      with:
+        # we need to fetch all tags to ensure that we can properly use tag-manage.
+        fetch-depth: 0
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ vars.AWS_REGION }}
+    
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v2
+      with:
+        registries: ${{ secrets.AWS_ACCOUNT_ID }}
+
+    - name: Build, tag, and push image to Amazon ECR
+      id: build-publish
+      shell: bash
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: ${{ vars.ECR_REPO_NAME }}
+        IMAGE_TAG: ${{ inputs.tag_version }}
+      run: |
+        docker build "${{ inputs.docker_build_dir }}" -f "${{ inputs.dockerfile }}" -t "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+        docker push "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+        echo "IMAGE $IMAGE_TAG is pushed to $ECR_REGISTRY/$ECR_REPOSITORY"
+        echo "image_tag=$IMAGE_TAG" 
+        echo "full_image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
