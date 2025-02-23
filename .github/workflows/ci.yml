@@ -32,6 +32,6 @@ jobs:
   docker:
     needs:
       - ci
-    uses: ./.github/workflows/ci-container.yml@docker
+    uses: ./.github/workflows/ci-container.yml
     with:
       tag_version: 1.0
