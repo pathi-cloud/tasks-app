@@ -32,7 +32,7 @@ jobs:
   docker:
     needs:
       - ci
-    uses: ./.github/workflows/ci-container.yml
+    uses: pathi-cloud/github-workflows/.github/workflows/ci-container.yml@main
     secrets: inherit
     with:
       tag_version: 1.0
