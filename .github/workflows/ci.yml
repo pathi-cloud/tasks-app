@@ -33,5 +33,6 @@ jobs:
     needs:
       - ci
     uses: ./.github/workflows/ci-container.yml
+    secrets: inherit
     with:
       tag_version: 1.0
