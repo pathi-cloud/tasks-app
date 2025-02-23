@@ -29,3 +29,10 @@ jobs:
       run_acceptance: false
       gh_pages_deploy_dir: ./build-ghpages
   
+  docker:
+    needs:
+      - ci
+    uses: pathi-cloud/github-workflows/.github/workflows/ci-container.yml@main
+    secrets: inherit
+    with:
+      tag_version: 1.0
