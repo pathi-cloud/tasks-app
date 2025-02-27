@@ -32,7 +32,8 @@ jobs:
   docker:
     needs:
       - ci
-    uses: pathi-cloud/github-workflows/.github/workflows/ci-container.yml@main
+    uses: pathi-cloud/github-workflows/.github/workflows/ci-container-ghcr.yml@main
     secrets: inherit
     with:
       tag_version: 1.0
+      ghcr_repo: 'tasks-app'
