@@ -7,17 +7,16 @@ on:
       - main
 
 permissions:
-  actions: read # permission to read other github actions
-  contents: write # contents needed for compliance
-  id-token: write # id-token needed for hpe-hcss/github-oidc-app. This authenticates the runner to AWS ECR.
-  packages: read # packages needed to read the build container
-  pull-requests: write # needed for compliance
+  actions: read 
+  contents: write 
+  id-token: write 
+  packages: write
   pages: write
 
 
 concurrency:
   # Only allows one build per workflow & branch/PR/tag
-  # cancels in-progress builds for that branch/PR/tag if a new one is submitted.
+  # cancels in-progress builds for that branch/PR/tag if a new one is submitted
   # https://docs.github.com/en/actions/using-jobs/using-concurrency
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -32,7 +31,8 @@ jobs:
   docker:
     needs:
       - ci
-    uses: pathi-cloud/github-workflows/.github/workflows/ci-container.yml@main
+    uses: pathi-cloud/github-workflows/.github/workflows/ci-container-ghcr.yml@main
     secrets: inherit
     with:
       tag_version: 1.0
+      ghcr_repo: 'tasks-app'
