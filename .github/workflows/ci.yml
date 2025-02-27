@@ -36,3 +36,15 @@ jobs:
     with:
       tag_version: 1.0
       ghcr_repo: 'tasks-app'
+  
+  helm:
+    needs:
+      - ci
+      - docker
+    uses: pathi-cloud/github-workflows/.github/workflows/ci-helm-linode.yml@main
+    secrets: inherit
+    with:
+      release_name: 'task-app'
+      chart_path: './helm/tasks-app'
+      namespace: 'tasks-app'
+
