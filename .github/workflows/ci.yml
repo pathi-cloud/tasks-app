@@ -16,7 +16,7 @@ permissions:
 
 
 concurrency:
-  # Only allows one build per workflow & branch/PR/tag 
+  # Only allows one build per workflow & branch/PR/tag
   # cancels in-progress builds for that branch/PR/tag if a new one is submitted.
   # https://docs.github.com/en/actions/using-jobs/using-concurrency
   group: ${{ github.workflow }}-${{ github.ref }}
