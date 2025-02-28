@@ -29,6 +29,7 @@ jobs:
       gh_pages_deploy_dir: ./build-ghpages
   
   docker:
+    if: github.ref == 'refs/heads/main'
     needs:
       - ci
     uses: pathi-cloud/github-workflows/.github/workflows/ci-container-ghcr.yml@main
@@ -38,6 +39,7 @@ jobs:
       ghcr_repo: 'tasks-app'
   
   helm:
+    if: github.ref == 'refs/heads/main'
     needs:
       - ci
       - docker
