@@ -9,11 +9,11 @@ replicaCount: 1
 image:
   # repository: tasks-app
   repository: ghcr.io/yugandhar-pathi/tasks-app
-  # This sets the pull policy for images.
+  # This sets the pull policy for images
   # pullPolicy: IfNotPresent
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: '4.0'
+  tag: 1
 
 # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: 

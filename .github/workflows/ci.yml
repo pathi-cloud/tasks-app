@@ -29,10 +29,25 @@ jobs:
       gh_pages_deploy_dir: ./build-ghpages
   
   docker:
+    if: github.ref == 'refs/heads/main'
     needs:
       - ci
     uses: pathi-cloud/github-workflows/.github/workflows/ci-container-ghcr.yml@main
     secrets: inherit
     with:
-      tag_version: 1.0
+      tag_version: ${{ github.sha }}
       ghcr_repo: 'tasks-app'
+  
+  helm:
+    if: github.ref == 'refs/heads/main'
+    needs:
+      - ci
+      - docker
+    uses: pathi-cloud/github-workflows/.github/workflows/ci-helm-linode.yml@main
+    secrets: inherit
+    with:
+      release_name: 'task-app'
+      chart_path: './helm/tasks-app'
+      namespace: 'tasks-app'
+      image_tag: ${{ github.sha }}
+
